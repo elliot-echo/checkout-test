@@ -22,6 +22,22 @@ namespace Checkout.Core.Tests
 		}
 
 		[Fact]
+		public void GetTotal_MultipleIdenticalItems_BundleOffer()
+		{
+			var plainAPolicy = new PricingPolicy("A", 50, new BundleDiscountStrategy());
+			var catalogue = new PricingCatalogue(plainAPolicy);
+
+			var checkout = new CheckoutService(catalogue);
+			checkout.Scan("A");
+			checkout.Scan("A");
+			checkout.Scan("A");
+
+			var total = checkout.GetTotalPrice();
+
+			Assert.Equal(130, total);
+		}
+
+		[Fact]
 		public void GetTotal_EmptyBasket()
 		{
 			var catalogue = new PricingCatalogue();
