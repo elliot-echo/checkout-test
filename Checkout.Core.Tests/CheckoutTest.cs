@@ -24,8 +24,8 @@ namespace Checkout.Core.Tests
 		[Fact]
 		public void GetTotal_MultipleIdenticalItems_BundleOffer()
 		{
-			var plainAPolicy = new PricingPolicy("A", 50, new BundleDiscountStrategy(3, 130));
-			var catalogue = new PricingCatalogue(plainAPolicy);
+			var bundleAPolicy = new PricingPolicy("A", 50, new BundleDiscountStrategy(3, 130));
+			var catalogue = new PricingCatalogue(bundleAPolicy);
 
 			var checkout = new CheckoutService(catalogue);
 			checkout.Scan("A");
@@ -46,6 +46,22 @@ namespace Checkout.Core.Tests
 			var total = checkout.GetTotalPrice();
 
 			Assert.Equal(0, total);
+		}
+
+		[Fact]
+		public void BuildCatalogue_InvalidStrategy()
+		{
+			Assert.Throws<ArgumentOutOfRangeException>(() => new BundleDiscountStrategy(-1, 130));
+			Assert.Throws<ArgumentOutOfRangeException>(() => new BundleDiscountStrategy(3, 0));
+		}
+
+		[Fact]
+		public void BuildCatalogue_InvalidPolicies()
+		{
+			var strategy = new BundleDiscountStrategy(3, 130);
+			Assert.Throws<ArgumentNullException>(() => new PricingPolicy(null, 50, strategy));
+			Assert.Throws<ArgumentOutOfRangeException>(() => new PricingPolicy("A", -1, strategy));
+			Assert.Throws<ArgumentNullException>(() => new PricingPolicy("A", 50, null!));
 		}
 	}
 }
