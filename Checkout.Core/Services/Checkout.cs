@@ -1,6 +1,6 @@
 ﻿using Checkout.Core.Interfaces;
 
-namespace Checkout.Core.Services
+namespace Checkout.Core
 {
 	public class Checkout : ICheckout
 	{
