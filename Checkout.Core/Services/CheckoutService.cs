@@ -1,4 +1,5 @@
 ﻿using System;
+using Checkout.Core.Catalogue;
 using Checkout.Core.Interfaces;
 
 namespace Checkout.Core.Services
@@ -6,6 +7,13 @@ namespace Checkout.Core.Services
 	public class CheckoutService : ICheckout
 	{
 		private readonly Dictionary<string, int> _basket = new(StringComparer.OrdinalIgnoreCase);
+
+		private readonly IPricingCatalogue _pricingCatalogue;
+
+		public CheckoutService(IPricingCatalogue pricingCatalogue)
+		{
+			_pricingCatalogue = pricingCatalogue;
+		}
 
 		public void Scan(string item)
 		{
@@ -19,6 +27,17 @@ namespace Checkout.Core.Services
 			}
 		}
 
-		public int GetTotalPrice() => _basket.Values.Sum();//since the price is an integer, the min price of an item is bound to be 1; then the most naive execution without knowing prices is to return the total quantity
+		public int GetTotalPrice()
+		{
+			var total = 0;
+
+			foreach (var item in _basket)
+			{
+				var policy = _pricingCatalogue.GetPricingPolicy(item.Key);
+				total += policy.Strategy.GetTotal(item.Value, policy.UnitPrice);
+			}
+
+			return total;
+		}
 	}
 }

@@ -13,7 +13,7 @@ namespace Checkout.Core.Tests
 			var plainAPolicy = new PricingPolicy("A", 50, new StandardPriceStrategy());
 			var catalogue = new PricingCatalogue(plainAPolicy);
 
-			var checkout = new CheckoutService();
+			var checkout = new CheckoutService(catalogue);
 			checkout.Scan("A");
 
 			var total = checkout.GetTotalPrice();
@@ -24,7 +24,8 @@ namespace Checkout.Core.Tests
 		[Fact]
 		public void GetTotal_EmptyBasket()
 		{
-			var checkout = new CheckoutService();
+			var catalogue = new PricingCatalogue();
+			var checkout = new CheckoutService(catalogue);
 
 			var total = checkout.GetTotalPrice();
 
