@@ -24,7 +24,7 @@ namespace Checkout.Core.Tests
 		[Fact]
 		public void GetTotal_MultipleIdenticalItems_BundleOffer()
 		{
-			var plainAPolicy = new PricingPolicy("A", 50, new BundleDiscountStrategy());
+			var plainAPolicy = new PricingPolicy("A", 50, new BundleDiscountStrategy(3, 130));
 			var catalogue = new PricingCatalogue(plainAPolicy);
 
 			var checkout = new CheckoutService(catalogue);
