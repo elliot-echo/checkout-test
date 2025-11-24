@@ -14,5 +14,15 @@ namespace Checkout.Core.Tests
 
 			Assert.True(total > 0);
 		}
+
+		[Fact]
+		public void GetTotal_EmptyBasket()
+		{
+			var checkout = new CheckoutService();
+
+			var total = checkout.GetTotalPrice();
+
+			Assert.True(total == 0);
+		}
 	}
 }
