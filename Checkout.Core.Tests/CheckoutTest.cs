@@ -18,7 +18,7 @@ namespace Checkout.Core.Tests
 
 			var total = checkout.GetTotalPrice();
 
-			Assert.True(total == 50);
+			Assert.Equal(50, total);
 		}
 
 		[Fact]
@@ -29,7 +29,7 @@ namespace Checkout.Core.Tests
 
 			var total = checkout.GetTotalPrice();
 
-			Assert.True(total == 0);
+			Assert.Equal(0, total);
 		}
 	}
 }
