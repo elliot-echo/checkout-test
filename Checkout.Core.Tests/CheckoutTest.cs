@@ -53,6 +53,10 @@ namespace Checkout.Core.Tests
 		{
 			Assert.Throws<ArgumentOutOfRangeException>(() => new BundleDiscountStrategy(-1, 130));
 			Assert.Throws<ArgumentOutOfRangeException>(() => new BundleDiscountStrategy(3, 0));
+
+			var strategy = new StandardPriceStrategy();
+			Assert.Throws<ArgumentOutOfRangeException>(() => strategy.GetTotal(-1, 5));
+			Assert.Throws<ArgumentOutOfRangeException>(() => strategy.GetTotal(1, -1));
 		}
 
 		[Fact]
