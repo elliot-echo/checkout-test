@@ -18,12 +18,12 @@ namespace Checkout.Core.Strategies
 		{
 			if (quantity < 2)
 			{
-				throw new ArgumentOutOfRangeException("Qualifying quantity cannot be less than 2", nameof(quantity));
+				throw new ArgumentOutOfRangeException(nameof(quantity), "Qualifying quantity cannot be less than 2");
 			}
 
 			if (price <= 0)
 			{
-				throw new ArgumentOutOfRangeException("Total price cannot be less than 1", nameof(price));
+				throw new ArgumentOutOfRangeException(nameof(price), "Total price cannot be less than 1");
 			}
 
 			_qualifyingQuantity = quantity;
@@ -34,12 +34,12 @@ namespace Checkout.Core.Strategies
 		{
 			if (quantity < 0)
 			{
-				throw new ArgumentOutOfRangeException("Qualifying quantity cannot be negative", nameof(quantity));
+				throw new ArgumentOutOfRangeException(nameof(quantity), "Qualifying quantity cannot be negative");
 			}
 
 			if (unitPrice < 0)
 			{
-				throw new ArgumentOutOfRangeException("Total price cannot be negative", nameof(unitPrice));
+				throw new ArgumentOutOfRangeException(nameof(unitPrice), "Total price cannot be negative");
 			}
 
 			var bundles = quantity / _qualifyingQuantity;

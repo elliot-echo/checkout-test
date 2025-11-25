@@ -6,12 +6,12 @@
 		{
 			if (quantity < 0)
 			{
-				throw new ArgumentOutOfRangeException("Qualifying quantity cannot be negative", nameof(quantity));
+				throw new ArgumentOutOfRangeException(nameof(quantity), "Qualifying quantity cannot be negative");
 			}
 
 			if (unitPrice < 0)
 			{
-				throw new ArgumentOutOfRangeException("Total price cannot be negative", nameof(unitPrice));
+				throw new ArgumentOutOfRangeException(nameof(unitPrice), "Total price cannot be negative");
 			}
 
 			return quantity * unitPrice;

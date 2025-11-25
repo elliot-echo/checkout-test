@@ -12,20 +12,14 @@ namespace Checkout.Core.DTO
 
 		public PricingPolicy(string sku, int unitPrice, IPricingStrategy strategy)
 		{
-			if (string.IsNullOrWhiteSpace(sku))
-			{
-				throw new ArgumentNullException("SKU cannot be empty", nameof(sku));
-			}
+			ArgumentNullException.ThrowIfNull(sku);
 
 			if (unitPrice < 0)
 			{
-				throw new ArgumentOutOfRangeException("Negative unit prices not permitted", nameof(unitPrice));
+				throw new ArgumentOutOfRangeException(nameof(unitPrice), "Negative unit prices not permitted");
 			}
 
-			if (strategy == null)
-			{
-				throw new ArgumentNullException("Pricing strategy not provided", nameof(strategy));
-			}
+			ArgumentNullException.ThrowIfNull(strategy);
 
 			SKU = sku;
 			UnitPrice = unitPrice;
