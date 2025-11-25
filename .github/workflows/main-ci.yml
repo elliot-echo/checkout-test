@@ -15,8 +15,8 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore Checkout.Core/Checkout.Core.sln
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build Checkout.Core/Checkout.Core.sln --no-restore --configuration Release
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test Checkout.Core/Checkout.Core.sln --no-build --verbosity normal
