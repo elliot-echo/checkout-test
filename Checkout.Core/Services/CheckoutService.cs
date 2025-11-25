@@ -12,19 +12,18 @@ namespace Checkout.Core.Services
 
 		public CheckoutService(IPricingCatalogue pricingCatalogue)
 		{
-			_pricingCatalogue = pricingCatalogue;
+			_pricingCatalogue = pricingCatalogue
+				?? throw new ArgumentNullException(nameof(pricingCatalogue));
 		}
 
 		public void Scan(string item)
 		{
-			if (!_basket.ContainsKey(item))
+			if (string.IsNullOrWhiteSpace(item))
 			{
-				_basket.Add(item, 1);
+				throw new ArgumentNullException(nameof(item));
 			}
-			else
-			{
-				_basket[item]++;
-			}
+
+			_basket[item] = _basket.TryGetValue(item, out var quantity) ? quantity + 1 : 1;
 		}
 
 		public int GetTotalPrice()
