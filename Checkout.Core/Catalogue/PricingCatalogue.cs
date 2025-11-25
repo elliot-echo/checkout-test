@@ -5,7 +5,7 @@ namespace Checkout.Core.Catalogue
 {
 	public class PricingCatalogue : IPricingCatalogue
 	{
-		private readonly Dictionary<string, PricingPolicy> _policies = new();
+		private readonly Dictionary<string, PricingPolicy> _policies = new(StringComparer.OrdinalIgnoreCase);
 
 		public PricingCatalogue(params PricingPolicy[] policies)
 		{
@@ -15,6 +15,14 @@ namespace Checkout.Core.Catalogue
 			}
 		}
 
-		public PricingPolicy GetPricingPolicy(string sku) => _policies[sku];
+		public PricingPolicy GetPricingPolicy(string sku)
+		{
+			if (!_policies.TryGetValue(sku, out var policy))
+			{
+				throw new KeyNotFoundException($"The provided SKU \'{sku}\' has no registered Pricing Policy");
+			}
+
+			return policy;
+		}
 	}
 }
