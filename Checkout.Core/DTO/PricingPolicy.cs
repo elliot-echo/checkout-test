@@ -12,7 +12,10 @@ namespace Checkout.Core.DTO
 
 		public PricingPolicy(string sku, int unitPrice, IPricingStrategy strategy)
 		{
-			ArgumentNullException.ThrowIfNull(sku);
+			if (string.IsNullOrWhiteSpace(sku))
+			{
+				throw new ArgumentNullException(nameof(sku));
+			}
 
 			if (unitPrice < 0)
 			{
