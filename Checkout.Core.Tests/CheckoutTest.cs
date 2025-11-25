@@ -7,6 +7,8 @@ namespace Checkout.Core.Tests
 {
 	public class CheckoutTest
 	{
+		#region Logic
+
 		[Fact]
 		public void GetTotal_MultipleDifferentItems_OfferCombination_RandomOrder()
 		{
@@ -37,7 +39,7 @@ namespace Checkout.Core.Tests
 			transactions.Add(() => checkout.Scan("C"));
 			transactions.Add(() => checkout.Scan("C"));
 
-			//three D'c for 15, 45 in total
+			//three D's for 15, 45 in total
 			transactions.Add(() => checkout.Scan("D"));
 			transactions.Add(() => checkout.Scan("D"));
 			transactions.Add(() => checkout.Scan("D"));
@@ -99,6 +101,10 @@ namespace Checkout.Core.Tests
 			Assert.Equal(0, total);
 		}
 
+		#endregion
+
+		#region Input Validation
+
 		[Fact]
 		public void BuildCatalogue_InvalidStrategy()
 		{
@@ -114,9 +120,11 @@ namespace Checkout.Core.Tests
 		public void BuildCatalogue_InvalidPolicies()
 		{
 			var strategy = new BundleDiscountStrategy(3, 130);
-			Assert.Throws<ArgumentNullException>(() => new PricingPolicy(null, 50, strategy));
+			Assert.Throws<ArgumentNullException>(() => new PricingPolicy(null!, 50, strategy));
 			Assert.Throws<ArgumentOutOfRangeException>(() => new PricingPolicy("A", -1, strategy));
 			Assert.Throws<ArgumentNullException>(() => new PricingPolicy("A", 50, null!));
 		}
+
+		#endregion
 	}
 }
